@@ -14,6 +14,7 @@ def _create_driver():
     driver_path = ChromeDriverManager(path='.').install()
     options = Options()
     options.add_argument("--incognito")
+    options.add_argument("--headless")
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
