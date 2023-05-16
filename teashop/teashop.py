@@ -3,6 +3,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from tqdm.auto import trange
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -26,13 +29,19 @@ def _create_driver():
     return driver
 
 
+def _pages_count(driver):
+    pagination = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "pagination")))
+    penultimate_element = pagination.find_elements(By.TAG_NAME, "li")[-2]
+    return int(penultimate_element.find_element(By.TAG_NAME, "a").text)
+
+
 def _get_tea_data(driver):
     teas = []
-    tea_index = 0
-    while True:
-        labels = driver.find_elements(By.CLASS_NAME, 'buyForm')
-        if not labels:
-            return teas
+    labels = driver.find_elements(By.CLASS_NAME, 'buyForm')
+    if not labels:
+        return teas
+    for tea_index in trange(len(labels), desc='Tea on the page', leave=False):
         label = labels[tea_index]
         label.click()
         # sometimes this element never appears
@@ -67,24 +76,19 @@ def _get_tea_data(driver):
                    characteristics=characteristics,
                    price=price)
         teas.append(tea)
-        print(name)
         driver.back()
-        tea_index += 1
-        if len(labels) == tea_index:
-            break
+        labels = driver.find_elements(By.CLASS_NAME, 'buyForm')
     return teas
 
 
 def fetch_teas():
     teas = []
     driver = _create_driver()
-    page_number = 1
-    while True:
+    driver.get(URL)
+    pages_count = _pages_count(driver)
+    for page_number in trange(1, pages_count + 1, desc='Page'):
         url = URL + PAGE_PARAM + str(page_number)
         driver.get(url)
         teas_on_page = _get_tea_data(driver)
-        if len(teas_on_page) == 0:
-            break
         teas.extend(teas_on_page)
-        page_number += 1
     driver.quit()
