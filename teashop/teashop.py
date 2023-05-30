@@ -92,3 +92,4 @@ def fetch_teas():
         teas_on_page = _get_tea_data(driver)
         teas.extend(teas_on_page)
     driver.quit()
+    return teas
