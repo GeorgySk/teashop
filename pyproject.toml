@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "teashop"
+version = "0.1.0"
+description = "Retrievs information about teas from the Tea Shop website"
+authors = ["GeorgySk <skorobogatovgeorgy+github@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+beautifulsoup4 = "^4.12.2"
+selenium = "^4.11.2"
+tqdm = "^4.66.0"
+webdriver-manager = "^4.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+hypothesis = "^6.82.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
