@@ -8,7 +8,7 @@ ARG POETRY_VERSION
 RUN pip install --upgrade pip setuptools
 RUN pip install "poetry==${POETRY_VERSION}"
 
-WORKDIR /opt/gon
+WORKDIR /opt/pode
 
 COPY pyproject.toml .
 RUN poetry config virtualenvs.create false
