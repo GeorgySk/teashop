@@ -44,19 +44,10 @@ def _get_tea_data(driver):
     for tea_index in trange(len(labels), desc='Tea on the page', leave=False):
         label = labels[tea_index]
         label.click()
-        # sometimes this element never appears
-        # WebDriverWait(driver, 20).until(EC.visibility_of_element_located(
-        # (By.CLASS_NAME, "product-review-summary"))).get_attribute("value")
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         name = soup.find("h1").contents[0]
         tags = [tag.contents[0].strip()
                 for tag in soup.find_all("div", {"class": "ct-function"})]
-        # commented due to occasionally disappearing ratings
-        # reviews_count = int(soup.find("span",
-        # {"class": "ts-stars-reviewCount"}).contents[0][1:-1])
-        # removes parenthesis
-        # rating = float(soup.find("span", {"class":
-        # "ts-reviewSummary-ratingValue"}).contents[0])
         description = soup.find("div", {"class": "product-long-description"}
                                 ).get_text().strip().replace("\xa0", " ")
         titles = (title.contents[0]
@@ -70,8 +61,6 @@ def _get_tea_data(driver):
                                 ).attrs['content'])
         tea = dict(name=name,
                    tags=tags,
-                   # reviews_count=reviews_count,
-                   # rating=rating,
                    description=description,
                    characteristics=characteristics,
                    price=price)
