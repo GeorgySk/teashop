@@ -10,7 +10,7 @@ TeaShop
 Summary
 -------
 
-Retrieves information from the Tea Shop website`.
+Retrieves information from the Tea Shop website.
 
 ---
 
