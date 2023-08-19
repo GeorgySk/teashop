@@ -47,8 +47,12 @@ poetry install
 
 Usage
 -----
+```python
+from teashop import fetch_teas
+teas = fetch_teas()
+assert isinstance(teas, dict)
+```
 
-...
 
 Development
 -----------
