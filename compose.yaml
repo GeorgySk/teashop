@@ -9,7 +9,7 @@ services:
         - PYTHON_IMAGE_VERSION=${CPYTHON_IMAGE_VERSION}
         - POETRY_VERSION=${POETRY_VERSION}
         - ENVIRONMENT=${ENVIRONMENT}
-    image: georgysk/teashop:0.1.2-alpha
+    image: georgysk/teashop:0.1.2
     volumes:
       - ./teashop/:/opt/teashop/teashop/
       - ./tests/:/opt/teashop/tests/
