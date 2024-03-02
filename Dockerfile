@@ -1,20 +1,26 @@
-ARG IMAGE_NAME
-ARG IMAGE_VERSION
+ARG PYTHON_IMAGE
+ARG PYTHON_IMAGE_VERSION
 
-FROM ${IMAGE_NAME}:${IMAGE_VERSION}
+FROM ${PYTHON_IMAGE}:${PYTHON_IMAGE_VERSION}
 
 ARG POETRY_VERSION
+ARG ENVIRONMENT
 
-RUN pip install --upgrade pip setuptools
-RUN pip install "poetry==${POETRY_VERSION}"
-
-WORKDIR /opt/pode
+WORKDIR /opt/teashop
 
 COPY pyproject.toml .
-RUN poetry config virtualenvs.create false
-RUN poetry install
-
 COPY README.md .
-COPY pytest.ini .
-COPY teashop/teashop teashop
-COPY tests tests
+COPY teashop/ teashop/
+COPY tests/ tests/
+
+RUN pip install --upgrade pip
+RUN if [ "${ENVIRONMENT}" = "development" ]; then \
+        pip install "poetry==${POETRY_VERSION}" && \
+        poetry config virtualenvs.create false && \
+        poetry install; \
+    elif [ "${ENVIRONMENT}" = "production" ]; then \
+        pip install -e .; \
+    else \
+        echo "Invalid environment specified: '${POETRY_VERSION}'"; \
+        exit 1; \
+    fi
