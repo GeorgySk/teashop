@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "teashop"
-version = "0.1.2"
+version = "0.2.0-alpha"
 description = "Retrievs information about teas from the Tea Shop website"
 authors = ["GeorgySk <skorobogatovgeorgy+github@gmail.com>"]
 readme = "README.md"
@@ -27,4 +27,3 @@ source = ["teashop"]
 
 [tool.pytest.ini_options]
 addopts = "--verbose -s --hypothesis-profile=default"
-testpaths = ["tests"]
