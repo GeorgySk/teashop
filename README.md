@@ -15,7 +15,7 @@ Retrieves information from the Tea Shop website.
 ---
 
 In what follows `python` is an alias for `python3.8` or any later
-version (`python3.9` and so on).
+version.
 
 Installation
 ------------
@@ -107,5 +107,5 @@ Plain:
 
 Inside `Docker` container:
   ```bash
-  docker-compose run --entrypoint pytest npd-cpython
+  docker-compose run --entrypoint pytest teashop
   ```

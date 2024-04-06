@@ -1,25 +1,13 @@
-version: '3'
-
 services:
   teashop:
     build:
       context: .
       args:
-        - PYTHON_IMAGE=${CPYTHON_IMAGE_NAME}
-        - PYTHON_IMAGE_VERSION=${CPYTHON_IMAGE_VERSION}
+        - PYTHON_IMAGE_VERSION=${PYTHON_IMAGE_VERSION}
         - POETRY_VERSION=${POETRY_VERSION}
-        - ENVIRONMENT=${ENVIRONMENT}
+        - DEV_IMAGE=${DEV_IMAGE}
     image: georgysk/teashop:0.2.1-alpha
     volumes:
-      - ./teashop/:/opt/teashop/teashop/
-      - ./tests/:/opt/teashop/tests/
-      - ./README.md:/opt/teashop/README.md
-      - ./.bumpversion.toml:/opt/teashop/.bumpversion.toml
-      - ./.env:/opt/teashop/.env
-      - ./Dockerfile:/opt/teashop/Dockerfile
-      - ./LICENSE:/opt/teashop/LICENSE
-      - ./MANIFEST.in:/opt/teashop/MANIFEST.in
-      - ./compose.yaml:/opt/teashop/compose.yaml
-      - ./pyproject.toml:/opt/teashop/pyproject.toml
+      - .:/opt/teashop
     stdin_open: true
     tty: true
